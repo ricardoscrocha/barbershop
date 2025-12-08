@@ -10,19 +10,20 @@ import { store } from '~/store';
 export default function RouteWrapper({
   component: Component,
   isPrivate,
+  layout: CustomLayout,
   ...rest
 }) {
   const { signed } = store.getState().auth;
 
   if (!signed && isPrivate) {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 
   if (signed && !isPrivate) {
     return <Redirect to="/dashboard" />;
   }
 
-  const Layout = signed ? DefaultLayout : AuthLayout;
+  const Layout = CustomLayout || (signed ? DefaultLayout : AuthLayout);
 
   return (
     <Route
@@ -40,8 +41,10 @@ RouteWrapper.propTypes = {
   isPrivate: PropTypes.bool,
   component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
     .isRequired,
+  layout: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
 };
 
 RouteWrapper.defaultProps = {
   isPrivate: false,
+  layout: null,
 };

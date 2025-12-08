@@ -4,6 +4,8 @@ import Route from './Route';
 
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
+import Landing from '../pages/Landing';
+import LandingLayout from '../pages/_layouts/landing';
 
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
@@ -11,7 +13,8 @@ import Profile from '../pages/Profile';
 export default function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={SignIn} />
+      <Route path="/" exact component={Landing} layout={LandingLayout} />
+      <Route path="/login" component={SignIn} />
       <Route path="/register" component={SignUp} />
 
       <Route path="/dashboard" component={Dashboard} isPrivate />
